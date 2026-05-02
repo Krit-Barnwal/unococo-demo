@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CEO Throne Chair — UNO COCO INC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --white: #FAFAF8;
+    --cream: #F5F1EC;
+    --sand: #E8E0D4;
+    --grey-soft: #D0CAC2;
+    --grey-mid: #A09890;
+    --charcoal: #2C2825;
+    --charcoal-soft: #3D3935;
+    --blue: #1E4A8C;
+    --blue-light: #2E6BC4;
+    --blue-pale: #D6E4F7;
+    --orange: #D4621A;
+    --orange-light: #E87D38;
+    --orange-pale: #FAE8DA;
+    --glass-bg: rgba(250,250,248,0.65);
+    --glass-border: rgba(255,255,255,0.5);
+    --shadow-soft: 0 8px 40px rgba(44,40,37,0.08);
+    --shadow-card: 0 20px 60px rgba(44,40,37,0.12);
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif; background: var(--white);
+    color: var(--charcoal); overflow-x: hidden;
+  }
+
+  /* ─── BUBBLES ─── */
+  .bubble-field { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
+  .bubble { position: absolute; border-radius: 50%; filter: blur(1px); animation: drift linear infinite; }
+  .bubble-1 { width: 400px; height: 400px; background: radial-gradient(circle at 35% 40%, rgba(30,74,140,0.08), transparent 60%); top: -50px; right: 0; animation-duration: 20s; }
+  .bubble-2 { width: 300px; height: 300px; background: radial-gradient(circle at 40% 35%, rgba(212,98,26,0.06), transparent 60%); top: 30%; left: -50px; animation-duration: 24s; animation-delay: -5s; }
+  .bubble-3 { width: 450px; height: 450px; background: radial-gradient(circle at 50% 50%, rgba(30,74,140,0.05), transparent 65%); bottom: 10%; right: -10%; animation-duration: 28s; animation-delay: -10s; }
+
+  @keyframes drift {
+    0%   { transform: translate(0, 0) scale(1); }
+    25%  { transform: translate(12px, -18px) scale(1.02); }
+    50%  { transform: translate(-8px, -30px) scale(0.98); }
+    75%  { transform: translate(16px, -14px) scale(1.01); }
+    100% { transform: translate(0, 0) scale(1); }
+  }
+
+  /* ─── NAVBAR ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 0 40px; height: 72px; display: flex; align-items: center; justify-content: space-between;
+    background: rgba(250,250,248,0.80); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(208,202,194,0.35); transition: all 0.3s ease;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .logo-mark { width: 40px; height: 40px; background: linear-gradient(135deg, var(--blue) 0%, var(--blue-light) 50%, var(--orange) 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(30,74,140,0.25); }
+  .logo-mark span { color: white; font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; }
+  .logo-text { display: flex; flex-direction: column; line-height: 1; }
+  .logo-text strong { font-size: 15px; font-weight: 600; letter-spacing: 2px; color: var(--charcoal); text-transform: uppercase; }
+  .logo-text small { font-size: 9px; letter-spacing: 1.5px; color: var(--grey-mid); text-transform: uppercase; margin-top: 2px; }
+  .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
+  .nav-links a { text-decoration: none; color: var(--charcoal-soft); font-size: 13px; font-weight: 500; letter-spacing: 0.5px; transition: color 0.2s; position: relative; }
+  .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; right: 0; height: 1.5px; background: var(--orange); transform: scaleX(0); transition: transform 0.25s; transform-origin: center; }
+  .nav-links a:hover { color: var(--charcoal); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+  .nav-cta { background: var(--charcoal); color: white !important; padding: 10px 22px; border-radius: 6px; font-size: 13px !important; transition: all 0.25s !important; }
+  .nav-cta::after { display: none !important; }
+  .nav-cta:hover { background: var(--blue) !important; box-shadow: 0 6px 20px rgba(30,74,140,0.30); }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 5px; }
+  .hamburger span { display: block; width: 24px; height: 2px; background: var(--charcoal); border-radius: 2px; transition: 0.3s; }
+
+  /* ─── MAIN PRODUCT LAYOUT ─── */
+  .product-page {
+    position: relative;
+    max-width: 1360px;
+    margin: 0 auto;
+    padding: 120px 40px 80px;
+    z-index: 1;
+  }
+
+  /* Breadcrumbs */
+  .breadcrumbs {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--grey-mid); margin-bottom: 40px;
+    opacity: 0; animation: fadeUp 0.6s ease forwards;
+  }
+  .breadcrumbs a { color: var(--charcoal-soft); text-decoration: none; transition: color 0.2s; }
+  .breadcrumbs a:hover { color: var(--blue); }
+  .breadcrumbs span { color: var(--sand); }
+
+  /* Product Split */
+  .product-hero {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  /* Left: Images */
+  .product-gallery { opacity: 0; animation: fadeUp 0.8s ease 0.1s forwards; }
+  
+  .main-image {
+    width: 100%;
+    height: 600px;
+    background: linear-gradient(160deg, #EAE5DE 0%, #D8D0C6 100%);
+    border-radius: 28px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--sand);
+  }
+
+  .main-image-bubble {
+    position: absolute; width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(30,74,140,0.1), transparent 70%);
+    top: -50px; right: -50px; border-radius: 50%; filter: blur(4px);
+  }
+
+  .main-image svg {
+    width: 320px; height: 400px;
+    filter: drop-shadow(0 20px 40px rgba(44,40,37,0.2));
+    animation: floatProduct 6s ease-in-out infinite;
+  }
+
+  @keyframes floatProduct {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+
+  .thumbnails {
+    display: flex; gap: 16px; margin-top: 24px;
+  }
+
+  .thumb {
+    width: 100px; height: 100px;
+    background: var(--cream);
+    border-radius: 16px;
+    border: 2px solid transparent;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all 0.3s ease;
+  }
+  
+  .thumb:hover { background: var(--sand); }
+  .thumb.active { border-color: var(--blue); background: white; box-shadow: var(--shadow-soft); }
+  .thumb svg { width: 45px; height: 60px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1)); }
+
+  /* Right: Details */
+  .product-details { opacity: 0; animation: fadeUp 0.8s ease 0.2s forwards; }
+
+  .prod-badge {
+    display: inline-block; background: var(--blue-pale); color: var(--blue);
+    font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 6px 12px; border-radius: 6px; margin-bottom: 16px;
+  }
+
+  .prod-title {
+    font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 4vw, 52px);
+    font-weight: 300; line-height: 1.1; color: var(--charcoal); margin-bottom: 16px;
+  }
+
+  .prod-sku { font-size: 12px; color: var(--grey-mid); letter-spacing: 1px; margin-bottom: 24px; display: block; }
+
+  .prod-price {
+    font-size: 28px; font-weight: 500; color: var(--charcoal);
+    display: flex; align-items: baseline; gap: 12px; margin-bottom: 24px;
+  }
+  .prod-price span { font-size: 13px; color: var(--orange); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; background: var(--orange-pale); padding: 4px 10px; border-radius: 6px; }
+
+  .prod-desc { font-size: 15px; line-height: 1.65; color: var(--grey-mid); margin-bottom: 32px; padding-bottom: 32px; border-bottom: 1px solid var(--sand); }
+
+  /* Options */
+  .option-group { margin-bottom: 28px; }
+  .option-label { display: block; font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--charcoal-soft); margin-bottom: 12px; }
+  
+  .color-swatches { display: flex; gap: 12px; }
+  .swatch {
+    width: 36px; height: 36px; border-radius: 50%;
+    cursor: pointer; position: relative;
+    border: 2px solid transparent; transition: all 0.2s;
+  }
+  .swatch.active { border-color: var(--blue); transform: scale(1.1); box-shadow: 0 4px 12px rgba(30,74,140,0.2); }
+  .swatch::after {
+    content: ''; position: absolute; inset: 2px; border-radius: 50%; background: var(--swatch-color);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+  }
+
+  .quantity-wrap { display: flex; align-items: center; gap: 16px; }
+  .qty-selector {
+    display: flex; align-items: center;
+    background: var(--cream); border: 1px solid var(--sand); border-radius: 10px;
+    overflow: hidden;
+  }
+  .qty-btn { width: 44px; height: 44px; border: none; background: transparent; font-size: 18px; cursor: pointer; color: var(--charcoal); transition: 0.2s; }
+  .qty-btn:hover { background: var(--sand); }
+  .qty-input { width: 50px; height: 44px; border: none; background: transparent; text-align: center; font-size: 15px; font-weight: 500; font-family: 'DM Sans'; color: var(--charcoal); outline: none; }
+
+  /* Actions */
+  .prod-actions { display: flex; gap: 16px; margin-top: 40px; }
+  
+  .btn-primary {
+    flex: 1; display: flex; align-items: center; justify-content: center; gap: 10px;
+    background: linear-gradient(135deg, var(--charcoal) 0%, var(--blue) 100%);
+    color: white; padding: 18px 24px; border-radius: 12px;
+    font-size: 15px; font-weight: 600; text-decoration: none; letter-spacing: 0.5px;
+    transition: all 0.3s ease; border: none; cursor: pointer; box-shadow: 0 8px 24px rgba(44,40,37,0.15);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(30,74,140,0.30); }
+
+  .btn-secondary {
+    display: flex; align-items: center; justify-content: center;
+    background: white; color: var(--charcoal);
+    padding: 18px 24px; border-radius: 12px; border: 1.5px solid var(--sand);
+    font-size: 14px; font-weight: 500; text-decoration: none; transition: all 0.3s ease;
+  }
+  .btn-secondary:hover { border-color: var(--charcoal); background: var(--cream); }
+
+  .shipping-note { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--grey-mid); margin-top: 16px; }
+  .shipping-note svg { width: 16px; height: 16px; opacity: 0.7; }
+
+  /* ─── TABS SECTION ─── */
+  .product-tabs { margin-top: 80px; max-width: 900px; opacity: 0; animation: fadeUp 0.8s ease 0.4s forwards; }
+  
+  .tab-nav { display: flex; gap: 40px; border-bottom: 1px solid var(--sand); margin-bottom: 32px; }
+  .tab-btn {
+    background: none; border: none; padding: 0 0 16px 0;
+    font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
+    color: var(--grey-mid); cursor: pointer; position: relative; transition: color 0.3s;
+  }
+  .tab-btn.active { color: var(--charcoal); }
+  .tab-btn::after {
+    content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 2px;
+    background: var(--blue); transform: scaleX(0); transition: transform 0.3s ease; transform-origin: left;
+  }
+  .tab-btn.active::after { transform: scaleX(1); }
+
+  .tab-content { display: none; font-size: 14px; line-height: 1.7; color: var(--grey-mid); animation: fadeIn 0.4s ease; }
+  .tab-content.active { display: block; }
+  
+  .specs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .spec-item { display: flex; justify-content: space-between; padding-bottom: 12px; border-bottom: 1px dashed var(--sand); }
+  .spec-item span:first-child { color: var(--charcoal-soft); font-weight: 500; }
+
+  /* ─── RELATED PRODUCTS ─── */
+  .related-section { padding: 100px 40px; background: var(--cream); position: relative; }
+  .related-inner { max-width: 1360px; margin: 0 auto; }
+  
+  .section-label { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .section-label-line { width: 32px; height: 2px; background: linear-gradient(90deg, var(--orange), var(--blue)); border-radius: 2px; }
+  .section-label span { font-size: 11px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--grey-mid); }
+  
+  .related-title { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 300; color: var(--charcoal); margin-bottom: 40px; }
+
+  .products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  .product-card { background: white; border-radius: 20px; overflow: hidden; border: 1px solid var(--sand); transition: all 0.4s; text-decoration: none; display: block; position: relative; }
+  .product-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lifted); }
+  .product-img { height: 220px; background: linear-gradient(160deg, #EAE5DE 0%, #D8D0C6 100%); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .product-img svg { width: 120px; height: 160px; filter: drop-shadow(0 12px 24px rgba(44,40,37,0.15)); transition: 0.4s; }
+  .product-card:hover .product-img svg { transform: scale(1.05) translateY(-4px); }
+  .product-info { padding: 20px; }
+  .product-category { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--orange); font-weight: 600; margin-bottom: 6px; }
+  .product-name { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: var(--charcoal); margin-bottom: 8px; }
+
+  /* ─── FOOTER & GLOBAL STYLES ─── */
+  footer { background: var(--charcoal); padding: 60px 0 32px; color: white; }
+  .footer-inner { max-width: 1280px; margin: 0 auto; padding: 0 40px; }
+  .footer-top { display: grid; grid-template-columns: 1.8fr 1fr 1fr 1fr; gap: 48px; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .footer-brand p { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.7; margin-top: 16px; max-width: 280px; }
+  .footer-logo { display: flex; align-items: center; gap: 12px; }
+  .footer-col h4 { font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 20px; }
+  .footer-col a { display: block; color: rgba(255,255,255,0.65); text-decoration: none; font-size: 13px; margin-bottom: 10px; transition: color 0.2s; }
+  .footer-col a:hover { color: white; }
+  .footer-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 28px; font-size: 12px; color: rgba(255,255,255,0.3); }
+
+  /* Reveal */
+  .reveal { opacity: 0; transform: translateY(30px); transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  /* Responsive */
+/* ─── RESPONSIVE ─── */
+  @media (max-width: 1024px) {
+    .product-hero { grid-template-columns: 1fr; gap: 40px; }
+    .main-image { height: 500px; }
+    .products-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  
+  @media (max-width: 768px) {
+    nav { padding: 0 18px; height: 64px; }
+    .logo-text small, .nav-links { display: none; }
+    .hamburger { display: flex; }
+    
+    /* MOBILE MENU FIX */
+    .nav-links.open { display: flex !important; flex-direction: column; position: fixed; top: 64px; left: 0; right: 0; background: rgba(250,250,248,0.98); backdrop-filter: blur(20px); padding: 24px 20px 32px; border-bottom: 1px solid var(--sand); z-index: 999; gap: 4px; box-shadow: var(--shadow-card); }
+    .nav-links.open li { width: 100%; }
+    .nav-links.open a { display: block; padding: 14px 16px; font-size: 16px; border-radius: 10px; color: var(--charcoal); }
+    .nav-links.open a:hover { background: var(--cream); }
+    .nav-links.open .nav-cta { margin-top: 10px; text-align: center; }
+
+    .product-page { padding: 90px 20px 40px; }
+    .breadcrumbs { margin-bottom: 24px; font-size: 10px; flex-wrap: wrap; line-height: 1.6; }
+    
+    /* Image Resizing */
+    .main-image { height: 320px; border-radius: 20px; }
+    .main-image svg { width: 180px; height: 240px; }
+    .thumbnails { gap: 10px; overflow-x: auto; padding-bottom: 8px; }
+    .thumb { width: 80px; height: 80px; border-radius: 12px; flex-shrink: 0; }
+    .thumb svg { width: 35px; height: 45px; }
+    
+    /* Text & Buttons Stacking */
+    .prod-title { font-size: 32px; margin-bottom: 12px; }
+    .prod-price { font-size: 24px; flex-direction: column; gap: 6px; align-items: flex-start; }
+    .prod-actions { flex-direction: column; gap: 12px; }
+    .btn-primary, .btn-secondary { width: 100%; }
+    
+    /* Horizontally scrolling tabs */
+    .product-tabs { margin-top: 50px; }
+    .tab-nav { gap: 20px; overflow-x: auto; white-space: nowrap; padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
+    .specs-grid { grid-template-columns: 1fr; gap: 10px; }
+    .spec-item { flex-direction: column; gap: 4px; border-bottom: none; padding-bottom: 16px; }
+    
+    .related-section { padding: 60px 20px; }
+    .products-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; gap: 32px; }
+    .footer-col { display: none; }
+    .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="logo-mark"><span>UC</span></div>
+    <div class="logo-text">
+      <strong>UNO COCO</strong>
+      <small>INC — Furniture Solutions</small>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#products">Products</a></li>
+    <li><a href="categories.html">Categories</a></li>
+    <li><a href="index.html#global">Global</a></li>
+    <li><a href="index.html#showroom">Showroom</a></li>
+    <li><a href="index.html#contact" class="nav-cta">Get in Touch</a></li>
+  </ul>
+  <div class="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- PRODUCT MAIN -->
+<section class="product-page">
+  <div class="bubble-field">
+    <div class="bubble bubble-1"></div>
+    <div class="bubble bubble-2"></div>
+  </div>
+
+  <div class="breadcrumbs">
+    <a href="index.html">Home</a> <span>/</span>
+    <a href="categories.html">Categories</a> <span>/</span>
+    <a href="categories.html">Executive Series</a> <span>/</span>
+    <span style="color: var(--charcoal);">CEO Throne Chair</span>
+  </div>
+
+  <div class="product-hero">
+    <!-- Image Gallery -->
+    <div class="product-gallery">
+      <div class="main-image">
+        <div class="main-image-bubble"></div>
+        <!-- High detail SVG for main image -->
+        <svg id="main-svg" viewBox="0 0 160 200" fill="none">
+          <rect x="30" y="15" width="100" height="110" rx="20" fill="url(#p1g)"/>
+          <rect x="40" y="80" width="80" height="30" rx="15" fill="rgba(30,74,140,0.15)"/>
+          <rect x="25" y="120" width="110" height="38" rx="12" fill="url(#p1s)"/>
+          <rect x="68" y="156" width="24" height="32" rx="6" fill="#9A9590"/>
+          <ellipse cx="80" cy="192" rx="44" ry="7" fill="#8A8580" opacity="0.7"/>
+          <!-- Arm rests details -->
+          <rect x="15" y="85" width="15" height="40" rx="6" fill="#3D3935"/>
+          <rect x="130" y="85" width="15" height="40" rx="6" fill="#3D3935"/>
+          <rect x="10" y="80" width="25" height="8" rx="4" fill="#9A9590"/>
+          <rect x="125" y="80" width="25" height="8" rx="4" fill="#9A9590"/>
+          <defs>
+            <linearGradient id="p1g" x1="30" y1="15" x2="130" y2="125" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#2C2825"/><stop offset="1" stop-color="#3D3935"/>
+            </linearGradient>
+            <linearGradient id="p1s" x1="25" y1="120" x2="135" y2="158" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#3D3935"/><stop offset="1" stop-color="#1E1C1A"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      
+      <div class="thumbnails">
+        <div class="thumb active" onclick="switchImage('black')">
+           <svg viewBox="0 0 160 200" fill="none"><rect x="30" y="15" width="100" height="110" rx="20" fill="#2C2825"/><rect x="25" y="120" width="110" height="38" rx="12" fill="#3D3935"/><rect x="68" y="156" width="24" height="32" rx="6" fill="#9A9590"/><ellipse cx="80" cy="192" rx="44" ry="7" fill="#8A8580" opacity="0.7"/></svg>
+        </div>
+        <div class="thumb" onclick="switchImage('tan')">
+           <svg viewBox="0 0 160 200" fill="none"><rect x="30" y="15" width="100" height="110" rx="20" fill="#8B5A2B"/><rect x="25" y="120" width="110" height="38" rx="12" fill="#A0522D"/><rect x="68" y="156" width="24" height="32" rx="6" fill="#9A9590"/><ellipse cx="80" cy="192" rx="44" ry="7" fill="#8A8580" opacity="0.7"/></svg>
+        </div>
+        <div class="thumb" onclick="switchImage('side')">
+           <svg viewBox="0 0 160 200" fill="none"><path d="M50 20 Q80 20 80 120 L40 120 Z" fill="#2C2825"/><rect x="40" y="120" width="60" height="20" rx="10" fill="#3D3935"/><rect x="65" y="140" width="15" height="45" rx="5" fill="#9A9590"/><ellipse cx="70" cy="190" rx="30" ry="5" fill="#8A8580" opacity="0.7"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Info -->
+    <div class="product-details">
+      <div class="prod-badge">In Stock (Bulk Ready)</div>
+      <h1 class="prod-title">CEO Throne Chair</h1>
+      <span class="prod-sku">SKU: UC-EXEC-1001</span>
+      
+      <div class="prod-price">
+        Enquire for Pricing <span>Wholesale Available</span>
+      </div>
+
+      <p class="prod-desc">
+        Command the room with our flagship executive chair. Designed for high-end corporate environments, the CEO Throne features hand-stitched premium vegan leather, dual-zone lumbar support, and a heavy-duty brushed aluminum chassis. Engineered for both unparalleled aesthetic presence and 12-hour ergonomic endurance.
+      </p>
+
+      <div class="option-group">
+        <span class="option-label">Upholstery Color</span>
+        <div class="color-swatches">
+          <div class="swatch active" style="--swatch-color: #2C2825;" onclick="selectSwatch(this, 'black')" title="Charcoal Black"></div>
+          <div class="swatch" style="--swatch-color: #8B5A2B;" onclick="selectSwatch(this, 'tan')" title="Classic Tan"></div>
+          <div class="swatch" style="--swatch-color: #EAE5DE;" onclick="selectSwatch(this, 'cream')" title="Ivory Cream"></div>
+        </div>
+      </div>
+
+      <div class="option-group">
+        <span class="option-label">Order Quantity</span>
+        <div class="quantity-wrap">
+          <div class="qty-selector">
+            <button class="qty-btn" onclick="updateQty(-1)">-</button>
+            <input type="text" class="qty-input" id="qty" value="10" readonly>
+            <button class="qty-btn" onclick="updateQty(1)">+</button>
+          </div>
+          <span style="font-size: 12px; color: var(--grey-mid);">MOQ: 10 units for export</span>
+        </div>
+      </div>
+
+      <div class="prod-actions">
+        <a href="https://wa.me/1234567890" target="_blank" class="btn-primary">
+          Request Bulk Quote →
+        </a>
+        <a href="#" class="btn-secondary">
+          Download Spec Sheet
+        </a>
+      </div>
+      
+      <div class="shipping-note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15 15 0 000 20M2 12h20"/></svg>
+        Global shipping available. Ships from India facility.
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabs Section -->
+  <div class="product-tabs">
+    <div class="tab-nav">
+      <button class="tab-btn active" onclick="openTab(event, 'specs')">Specifications</button>
+      <button class="tab-btn" onclick="openTab(event, 'ergonomics')">Ergonomics & Features</button>
+      <button class="tab-btn" onclick="openTab(event, 'shipping')">Shipping & Warranty</button>
+    </div>
+
+    <div id="specs" class="tab-content active">
+      <div class="specs-grid">
+        <div class="spec-item"><span>Total Height</span> <span>120cm - 130cm (Adjustable)</span></div>
+        <div class="spec-item"><span>Seat Width</span> <span>54cm</span></div>
+        <div class="spec-item"><span>Seat Depth</span> <span>52cm</span></div>
+        <div class="spec-item"><span>Weight Capacity</span> <span>150 kg (330 lbs)</span></div>
+        <div class="spec-item"><span>Mechanism</span> <span>Multi-block Synchro Tilt (4 positions)</span></div>
+        <div class="spec-item"><span>Gas Lift</span> <span>Class 4 (BIFMA Certified)</span></div>
+        <div class="spec-item"><span>Base Material</span> <span>Polished Aluminum Alloy</span></div>
+        <div class="spec-item"><span>Casters</span> <span>60mm PU (Silent & Scratch-free)</span></div>
+      </div>
+    </div>
+
+    <div id="ergonomics" class="tab-content">
+      <p style="margin-bottom: 16px;"><strong>Dynamic Lumbar Support:</strong> Features a dual-zone cushioning system that automatically adjusts to the user's lower back pressure, preventing spinal compression during long seated sessions.</p>
+      <p style="margin-bottom: 16px;"><strong>4D Adjustable Armrests:</strong> Aluminum-stemmed armrests featuring soft PU pads that adjust in height, depth, width, and pivot angle to support any typing or writing posture.</p>
+      <p><strong>Waterfall Seat Edge:</strong> The sloping front edge of the high-density foam seat pan reduces pressure on the back of the thighs, promoting healthy blood circulation to the lower extremities.</p>
+    </div>
+
+    <div id="shipping" class="tab-content">
+      <p style="margin-bottom: 16px;"><strong>Packaging:</strong> Shipped flat-packed in heavy-duty double-corrugated export cartons (K=K). Components are individually wrapped in EPE foam to prevent transit damage.</p>
+      <p style="margin-bottom: 16px;"><strong>Export Capacity:</strong> 150 units fit in a 20ft GP container. 350 units fit in a 40ft HQ container.</p>
+      <p><strong>Warranty:</strong> 5-Year comprehensive structural warranty on frame and base. 3-Year warranty on gas lift mechanism and casters. 1-Year warranty on upholstery.</p>
+    </div>
+  </div>
+</section>
+
+<!-- RELATED PRODUCTS -->
+<section class="related-section">
+  <div class="related-inner">
+    <div class="section-label reveal">
+      <div class="section-label-line"></div>
+      <span>More to consider</span>
+    </div>
+    <h2 class="related-title reveal">Related Executive Seating</h2>
+    
+    <div class="products-grid">
+      <!-- Card 1 -->
+      <a href="#" class="product-card reveal reveal-delay-1">
+        <div class="product-img" style="background: linear-gradient(160deg, #F0EBE4 0%, #DDD5CC 100%);">
+          <svg viewBox="0 0 160 200" fill="none">
+            <rect x="35" y="20" width="90" height="100" rx="20" fill="#5A5550"/>
+            <rect x="30" y="118" width="100" height="36" rx="12" fill="#4A4540"/>
+            <rect x="68" y="152" width="24" height="28" rx="6" fill="#9A9590"/>
+            <ellipse cx="80" cy="184" rx="50" ry="8" fill="#8A8580" opacity="0.6"/>
+          </svg>
+        </div>
+        <div class="product-info">
+          <div class="product-category">Executive Series</div>
+          <div class="product-name">Director Pro Chair</div>
+        </div>
+      </a>
+      
+      <!-- Card 2 -->
+      <a href="#" class="product-card reveal reveal-delay-2">
+        <div class="product-img" style="background: linear-gradient(160deg, #E4E8F0 0%, #CDD5E0 100%);">
+          <svg viewBox="0 0 160 200" fill="none">
+            <rect x="25" y="10" width="110" height="130" rx="25" fill="#1E4A8C"/>
+            <rect x="20" y="135" width="120" height="38" rx="12" fill="#2C2825"/>
+            <rect x="68" y="171" width="24" height="26" rx="6" fill="#9A9590"/>
+            <ellipse cx="80" cy="200" rx="44" ry="7" fill="#8A8580" opacity="0.7"/>
+          </svg>
+        </div>
+        <div class="product-info">
+          <div class="product-category">Executive Series</div>
+          <div class="product-name">Sapphire Executive</div>
+        </div>
+      </a>
+
+      <!-- Card 3 -->
+      <a href="#" class="product-card reveal">
+        <div class="product-img" style="background: linear-gradient(160deg, #F0EAE0 0%, #E0D5C5 100%);">
+          <svg viewBox="0 0 160 200" fill="none">
+            <rect x="30" y="25" width="100" height="90" rx="22" fill="#D4621A"/>
+            <rect x="25" y="110" width="110" height="36" rx="14" fill="#C4521A"/>
+            <rect x="68" y="146" width="24" height="36" rx="6" fill="#9A9590"/>
+            <ellipse cx="80" cy="186" rx="48" ry="8" fill="#8A8580" opacity="0.6"/>
+          </svg>
+        </div>
+        <div class="product-info">
+          <div class="product-category">Executive Series</div>
+          <div class="product-name">Amber Luxe Seat</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <div class="logo-mark"><span>UC</span></div>
+          <div class="logo-text">
+            <strong style="color:white;">UNO COCO</strong>
+            <small>INC — Furniture Solutions</small>
+          </div>
+        </div>
+        <p>Premium office seating, ergonomic solutions, and furniture hardware — manufactured with care and shipped globally since 2008.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <a href="#">Executive Chairs</a>
+        <a href="#">Mesh Chairs</a>
+        <a href="#">Hardware</a>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <a href="#">Import & Export</a>
+        <a href="#">Bulk Orders</a>
+        <a href="#">Showroom</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="#">Contact Us</a>
+        <a href="#">Privacy Policy</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 UNO COCO INC. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Mobile Menu
+const hamburger = document.querySelector('.hamburger');
+const navLinks = document.querySelector('.nav-links');
+hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+
+// Scroll Reveal
+const revealEls = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.1 });
+revealEls.forEach(el => observer.observe(el));
+
+// Sticky Nav
+const nav = document.querySelector('nav');
+window.addEventListener('scroll', () => {
+  nav.style.boxShadow = window.scrollY > 40 ? '0 4px 30px rgba(44,40,37,0.08)' : 'none';
+});
+
+// Quantity Selector
+function updateQty(change) {
+  const input = document.getElementById('qty');
+  let val = parseInt(input.value) + change;
+  if(val < 1) val = 1;
+  input.value = val;
+}
+
+// Swatch Selector & Image Switch Simulation
+function selectSwatch(element, color) {
+  document.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
+  element.classList.add('active');
+  switchImage(color);
+}
+
+// Thumbnail & Image switching logic
+function switchImage(type) {
+  document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+  // In a real app, this would swap an <img> src. Here we simulate it by tweaking the SVG colors.
+  const svgGroup = document.querySelector('#main-svg rect[fill="url(#p1g)"]');
+  const svgSeat = document.querySelector('#main-svg rect[fill="url(#p1s)"]');
+  
+  if(type === 'black') {
+    event.currentTarget.classList.add('active');
+    svgGroup.setAttribute('fill', 'url(#p1g)');
+    svgSeat.setAttribute('fill', 'url(#p1s)');
+  } else if (type === 'tan') {
+    event.currentTarget.classList.add('active');
+    svgGroup.setAttribute('fill', '#8B5A2B');
+    svgSeat.setAttribute('fill', '#A0522D');
+  } else if (type === 'side') {
+    event.currentTarget.classList.add('active');
+    // Just a visual cue that it changed
+    svgGroup.setAttribute('fill', '#4A4540');
+  } else if (type === 'cream') {
+     svgGroup.setAttribute('fill', '#EAE5DE');
+     svgSeat.setAttribute('fill', '#D8D0C6');
+  }
+}
+
+// Tabs Logic
+function openTab(evt, tabName) {
+  document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+  document.getElementById(tabName).classList.add('active');
+  evt.currentTarget.classList.add('active');
+}
+</script>
+</body>
+</html>
